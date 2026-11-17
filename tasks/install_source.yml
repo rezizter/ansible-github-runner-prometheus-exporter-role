@@ -22,6 +22,10 @@
         remote_src: true
         owner: root
         group: root
+      register: download_result
+      until: download_result is succeeded
+      retries: 3
+      delay: 5
 
 - name: Clone or update github-runner-prometheus-exporter repository
   ansible.builtin.git:
