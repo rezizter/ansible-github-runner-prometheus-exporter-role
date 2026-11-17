@@ -21,6 +21,8 @@ provisioner:
   inventory:
     host_vars:
       instance:
+        ansible_user: root
+        ansible_become: false
         github_runner_exporter_env_vars:
           PORT: "9101"
           GITHUB_TOKEN: "ghp_dummy_token_for_molecule_testing_12345"
