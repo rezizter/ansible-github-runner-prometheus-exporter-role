@@ -1,0 +1,21 @@
+---
+- name: Install dependencies on Debian/Ubuntu
+  ansible.builtin.apt:
+    name: "{{ github_runner_exporter_packages_debian }}"
+    state: present
+    update_cache: true
+  when: ansible_os_family == "Debian"
+
+- name: Install dependencies on RHEL/Rocky/AlmaLinux
+  ansible.builtin.dnf:
+    name: "{{ github_runner_exporter_packages_redhat }}"
+    state: present
+  when:
+    - ansible_os_family == "RedHat"
+    - ansible_distribution != "Amazon"
+
+- name: Install dependencies on Amazon Linux 2023
+  ansible.builtin.dnf:
+    name: "{{ github_runner_exporter_packages_amazon }}"
+    state: present
+  when: ansible_distribution == "Amazon"
