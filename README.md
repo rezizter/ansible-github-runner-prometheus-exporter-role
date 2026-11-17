@@ -38,7 +38,7 @@ Available variables and their default values (defined in `defaults/main.yml`):
 | `github_runner_exporter_service_enabled` | `true` | Whether the service starts automatically on boot. |
 | `github_runner_exporter_service_state` | `"started"` | Desired state of the `systemd` service. |
 | `github_runner_exporter_cli_args` | `""` | Additional command-line flags appended to `ExecStart`. |
-| `github_runner_exporter_env_vars` | `{ PORT: "9101" }` | Dictionary of environment variables written to `/etc/github-runner-exporter/exporter.env`. |
+| `github_runner_exporter_env_vars` | `{ PORT: "9877" }` | Dictionary of environment variables written to `/etc/github-runner-exporter/exporter.env`. |
 
 ---
 
