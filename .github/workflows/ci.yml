@@ -64,7 +64,7 @@ jobs:
             "requests<2.32.0"
 
       - name: Install Ansible collections
-        run: ansible-galaxy collection install community.docker
+        run: ansible-galaxy collection install community.docker ansible.posix
 
       - name: Run Molecule test
         run: molecule test -- -vv
