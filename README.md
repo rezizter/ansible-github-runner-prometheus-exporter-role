@@ -56,7 +56,7 @@ Add the role to your `requirements.yml` file:
 ---
 roles:
   - name: github_runner_exporter
-    src: https://github.com/<your-org>/ansible-role-github-runner-exporter.git
+    src: https://github.com/rezizter/ansible-role-github-runner-exporter.git
     version: main
 ```
 
