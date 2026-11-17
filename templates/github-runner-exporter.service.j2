@@ -1,0 +1,26 @@
+[Unit]
+Description=GitHub Runner Prometheus Exporter
+Documentation=https://github.com/rezizter/github-runner-prometheus-exporter
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User={{ github_runner_exporter_user }}
+Group={{ github_runner_exporter_group }}
+EnvironmentFile={{ github_runner_exporter_config_dir }}/exporter.env
+ExecStart={{ github_runner_exporter_install_dir }}/github-runner-prometheus-exporter {{ github_runner_exporter_cli_args }}
+Restart=on-failure
+RestartSec=5s
+
+# Systemd Hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+
+[Install]
+WantedBy=multi-user.target
