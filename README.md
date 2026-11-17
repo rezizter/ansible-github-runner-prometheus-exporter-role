@@ -28,7 +28,7 @@ Available variables and their default values (defined in `defaults/main.yml`):
 | `github_runner_exporter_install_method` | `"source"` | Installation mode: `"source"` (compiles via `go build`) or `"binary"` (downloads GitHub release archive). |
 | `github_runner_exporter_repo_url` | `"https://github.com/rezizter/github-runner-prometheus-exporter.git"` | Git repository URL used when building from source. |
 | `github_runner_exporter_version` | `"main"` | Git branch, tag, or commit hash (for `source`), or release tag (for `binary`). |
-| `github_runner_exporter_go_version` | `"1.23.4"` | Go version installed to `/usr/local/go` when building from source. |
+| `github_runner_exporter_go_version` | `"1.26.0"` | Go version installed to `/usr/local/go` when building from source. |
 | `github_runner_exporter_user` | `"github-exporter"` | System user running the exporter service. |
 | `github_runner_exporter_group` | `"github-exporter"` | System group for the exporter user and config directory. |
 | `github_runner_exporter_install_dir` | `"/usr/local/bin"` | Directory where the compiled/extracted binary is placed. |
