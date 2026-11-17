@@ -1,0 +1,32 @@
+---
+# Installation method: 'binary' (GitHub Releases) or 'source' (go build)
+github_runner_exporter_install_method: "source"
+github_runner_exporter_repo_url: "https://github.com/rezizter/github-runner-prometheus-exporter.git"
+github_runner_exporter_version: "main"
+
+# Binary release settings (used when install_method == 'binary')
+github_runner_exporter_release_url: >-
+  https://github.com/rezizter/github-runner-prometheus-exporter/releases/download/{{ github_runner_exporter_version }}/github-runner-prometheus-exporter_{{ github_runner_exporter_version | regex_replace('^v', '') }}_linux_{{ github_runner_exporter_arch }}.tar.gz
+
+# Go version to install when building from source
+github_runner_exporter_go_version: "1.23.4"
+
+# System user & paths
+github_runner_exporter_user: "github-exporter"
+github_runner_exporter_group: "github-exporter"
+github_runner_exporter_install_dir: "/usr/local/bin"
+github_runner_exporter_config_dir: "/etc/github-runner-exporter"
+github_runner_exporter_src_dir: "/usr/local/src/github-runner-prometheus-exporter"
+
+# Service & Exporter configuration
+github_runner_exporter_service_name: "github-runner-exporter"
+github_runner_exporter_service_enabled: true
+github_runner_exporter_service_state: "started"
+
+# CLI flags and environment variables passed to the exporter
+github_runner_exporter_cli_args: ""
+github_runner_exporter_env_vars:
+  PORT: "9101"
+  # GITHUB_TOKEN: ""
+  # GITHUB_ORG: ""
+  # GITHUB_REPO: ""
