@@ -56,7 +56,7 @@ Add the role to your `requirements.yml` file:
 ---
 roles:
   - name: github_runner_exporter
-    src: https://github.com/rezizter/ansible-role-github-runner-exporter-role.git
+    src: https://github.com/rezizter/ansible-github-runner-prometheus-exporter-role.git
     version: main
 ```
 
