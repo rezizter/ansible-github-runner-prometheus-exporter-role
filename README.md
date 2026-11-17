@@ -86,7 +86,7 @@ Pass your GitHub Personal Access Token (PAT) and organization/repository targets
     github_runner_exporter_install_method: "source"
     github_runner_exporter_version: "main"
     github_runner_exporter_env_vars:
-      PORT: "9101"
+      PORT: "9877"
       GITHUB_TOKEN: "{{ vault_github_token }}"
       GITHUB_ORG: "my-github-org"
       # GITHUB_REPO: "my-github-org/my-repo"

@@ -22,7 +22,7 @@ provisioner:
       instance:
         # Use a dummy token during CI tests so the exporter starts without failing auth
         github_runner_exporter_env_vars:
-          PORT: "9101"
+          PORT: "9877"
           GITHUB_TOKEN: "ghp_dummy_token_for_molecule_testing_12345"
           GITHUB_ORG: "example-org"
 verifier:
