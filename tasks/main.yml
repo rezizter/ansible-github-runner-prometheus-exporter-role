@@ -1,0 +1,64 @@
+---
+- name: Include prerequisite tasks
+  ansible.builtin.include_tasks: prerequisites.yml
+
+- name: Ensure exporter group exists
+  ansible.builtin.group:
+    name: "{{ github_runner_exporter_group }}"
+    system: true
+    state: present
+
+- name: Ensure exporter user exists
+  ansible.builtin.user:
+    name: "{{ github_runner_exporter_user }}"
+    group: "{{ github_runner_exporter_group }}"
+    shell: /sbin/nologin
+    system: true
+    create_home: false
+    state: present
+
+- name: Ensure configuration directory exists
+  ansible.builtin.file:
+    path: "{{ github_runner_exporter_config_dir }}"
+    state: directory
+    owner: root
+    group: "{{ github_runner_exporter_group }}"
+    mode: "0750"
+
+- name: Install exporter from prebuilt binary
+  ansible.builtin.include_tasks: install_binary.yml
+  when: github_runner_exporter_install_method == "binary"
+
+- name: Build and install exporter from source
+  ansible.builtin.include_tasks: install_source.yml
+  when: github_runner_exporter_install_method == "source"
+
+- name: Render environment configuration file
+  ansible.builtin.template:
+    src: github-runner-exporter.env.j2
+    dest: "{{ github_runner_exporter_config_dir }}/exporter.env"
+    owner: root
+    group: "{{ github_runner_exporter_group }}"
+    mode: "0640"
+  notify: Restart github-runner-exporter
+
+- name: Render systemd unit file
+  ansible.builtin.template:
+    src: github-runner-exporter.service.j2
+    dest: "/etc/systemd/system/{{ github_runner_exporter_service_name }}.service"
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Reload systemd
+    - Restart github-runner-exporter
+
+- name: Flush handlers before verifying service state
+  ansible.builtin.meta: flush_handlers
+
+- name: Ensure github-runner-exporter service is enabled and running
+  ansible.builtin.systemd:
+    name: "{{ github_runner_exporter_service_name }}"
+    enabled: "{{ github_runner_exporter_service_enabled }}"
+    state: "{{ github_runner_exporter_service_state }}"
+    daemon_reload: true
