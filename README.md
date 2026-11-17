@@ -1,3 +1,7 @@
+[![CI](https://github.com/rezizter/ansible-github-runner-prometheus-exporter-role/actions/workflows/ci.yml/badge.svg)](https://github.com/rezizter/ansible-github-runner-prometheus-exporter-role/actions/workflows/ci.yml)
+[![Latest Release](https://img.shields.io/badge/Release-latest-brightgreen.svg)](https://github.com/rezizter/ansible-github-runner-prometheus-exporter-role/releases/latest)
+[![Repository License](https://img.shields.io/github/license/rezizter/ansible-github-runner-prometheus-exporter-role)](https://github.com/rezizter/ansible-github-runner-prometheus-exporter-role?tab=GPL-3.0-1-ov-file)
+
 # Ansible Role: `github_runner_exporter`
 
 An Ansible role to deploy and configure [`rezizter/github-runner-prometheus-exporter`](https://github.com/rezizter/github-runner-prometheus-exporter) as a hardened `systemd` service across major Linux distributions, including **Amazon Linux 2023**, **RHEL / Rocky / AlmaLinux**, **Ubuntu**, and **Debian**.
