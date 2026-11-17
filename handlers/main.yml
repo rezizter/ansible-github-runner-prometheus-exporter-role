@@ -1,0 +1,9 @@
+---
+- name: Reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Restart github-runner-exporter
+  ansible.builtin.systemd:
+    name: "{{ github_runner_exporter_service_name }}"
+    state: restarted
