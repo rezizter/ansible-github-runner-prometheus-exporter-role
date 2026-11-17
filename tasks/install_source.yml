@@ -18,6 +18,7 @@
       ansible.builtin.unarchive:
         src: "https://go.dev/dl/go{{ github_runner_exporter_go_version }}.linux-{{ github_runner_exporter_arch }}.tar.gz"
         dest: /usr/local
+        timeout: 200
         remote_src: true
         owner: root
         group: root
