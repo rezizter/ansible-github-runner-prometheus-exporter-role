@@ -1,0 +1,12 @@
+---
+- name: Download and extract prebuilt exporter binary
+  ansible.builtin.unarchive:
+    src: "{{ github_runner_exporter_release_url }}"
+    dest: "{{ github_runner_exporter_install_dir }}"
+    remote_src: true
+    include:
+      - "github-runner-prometheus-exporter"
+    owner: root
+    group: root
+    mode: "0755"
+  notify: Restart github-runner-exporter
