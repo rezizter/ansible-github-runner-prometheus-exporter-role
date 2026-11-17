@@ -1,0 +1,53 @@
+---
+- name: Check installed Go version
+  ansible.builtin.command: /usr/local/go/bin/go version
+  register: go_version_check
+  changed_when: false
+  failed_when: false
+
+- name: Download and install Go toolchain
+  when: go_version_check.rc != 0 or (github_runner_exporter_go_version not in go_version_check.stdout)
+  block:
+    - name: Remove existing Go installation
+      ansible.builtin.file:
+        path: /usr/local/go
+        state: absent
+
+    - name: Download and extract Go {{ github_runner_exporter_go_version }}
+      ansible.builtin.unarchive:
+        src: "https://go.dev/dl/go{{ github_runner_exporter_go_version }}.linux-{{ github_runner_exporter_arch }}.tar.gz"
+        dest: /usr/local
+        remote_src: true
+
+- name: Clone or update github-runner-prometheus-exporter repository
+  ansible.builtin.git:
+    repo: "{{ github_runner_exporter_repo_url }}"
+    dest: "{{ github_runner_exporter_src_dir }}"
+    version: "{{ github_runner_exporter_version }}"
+    force: true
+  register: git_clone_result
+
+- name: Check if compiled binary exists
+  ansible.builtin.stat:
+    path: "{{ github_runner_exporter_install_dir }}/github-runner-prometheus-exporter"
+  register: exporter_binary_stat
+
+- name: Build Go binary
+  ansible.builtin.command:
+    cmd: "/usr/local/go/bin/go build -trimpath -ldflags='-s -w' -o {{ github_runner_exporter_install_dir }}/github-runner-prometheus-exporter ."
+    chdir: "{{ github_runner_exporter_src_dir }}"
+  environment:
+    CGO_ENABLED: "0"
+    GOOS: "linux"
+    GOARCH: "{{ github_runner_exporter_arch }}"
+    GOPATH: "/tmp/go"
+    GOCACHE: "/tmp/go-cache"
+  when: git_clone_result.changed or not exporter_binary_stat.stat.exists
+  notify: Restart github-runner-exporter
+
+- name: Ensure binary permissions are correct
+  ansible.builtin.file:
+    path: "{{ github_runner_exporter_install_dir }}/github-runner-prometheus-exporter"
+    owner: root
+    group: root
+    mode: "0755"
