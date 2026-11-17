@@ -1,0 +1,25 @@
+---
+- name: Verify
+  hosts: all
+  become: true
+  tasks:
+    - name: Check that exporter binary exists and is executable
+      ansible.builtin.stat:
+        path: /usr/local/bin/github-runner-prometheus-exporter
+      register: binary_stat
+
+    - name: Assert binary permissions
+      ansible.builtin.assert:
+        that:
+          - binary_stat.stat.exists
+          - binary_stat.stat.executable
+
+    - name: Gather service facts
+      ansible.builtin.service_facts:
+
+    - name: Assert systemd service is enabled and active
+      ansible.builtin.assert:
+        that:
+          - "'github-runner-exporter.service' in ansible_facts.services"
+          - "ansible_facts.services['github-runner-exporter.service'].status == 'enabled'"
+          - "ansible_facts.services['github-runner-exporter.service'].state == 'running'"
