@@ -1,6 +1,7 @@
 ---
 - name: Check installed Go version
-  ansible.builtin.command: /usr/local/go/bin/go version
+  ansible.builtin.command:
+    cmd: /usr/local/go/bin/go version
   register: go_version_check
   changed_when: false
   failed_when: false
@@ -13,11 +14,13 @@
         path: /usr/local/go
         state: absent
 
-    - name: Download and extract Go {{ github_runner_exporter_go_version }}
+    - name: Download and extract Go toolchain archive
       ansible.builtin.unarchive:
         src: "https://go.dev/dl/go{{ github_runner_exporter_go_version }}.linux-{{ github_runner_exporter_arch }}.tar.gz"
         dest: /usr/local
         remote_src: true
+        owner: root
+        group: root
 
 - name: Clone or update github-runner-prometheus-exporter repository
   ansible.builtin.git:
@@ -43,6 +46,7 @@
     GOPATH: "/tmp/go"
     GOCACHE: "/tmp/go-cache"
   when: git_clone_result.changed or not exporter_binary_stat.stat.exists
+  changed_when: true
   notify: Restart github-runner-exporter
 
 - name: Ensure binary permissions are correct
