@@ -1,0 +1,23 @@
+---
+github_runner_exporter_arch_map:
+  x86_64: "amd64"
+  aarch64: "arm64"
+
+github_runner_exporter_arch: "{{ github_runner_exporter_arch_map[ansible_architecture] | default('amd64') }}"
+
+# OS-specific dependencies (handles Amazon Linux 2023 curl-minimal conflict)
+github_runner_exporter_packages_debian:
+  - ca-certificates
+  - curl
+  - git
+  - tar
+
+github_runner_exporter_packages_redhat:
+  - ca-certificates
+  - git
+  - tar
+
+github_runner_exporter_packages_amazon:
+  - ca-certificates
+  - git
+  - tar
