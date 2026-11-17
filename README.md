@@ -94,6 +94,7 @@ Pass your GitHub Personal Access Token (PAT) and organization/repository targets
       GITHUB_TOKEN: "{{ vault_github_token }}"
       GITHUB_ORG: "my-github-org"
       # GITHUB_REPO: "my-github-org/my-repo"
+      # REPOS_FILE: "{{ github_runner_exporter_config_dir }}/repo.txt"
 
   roles:
     - role: github_runner_exporter
