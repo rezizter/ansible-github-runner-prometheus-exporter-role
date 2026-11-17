@@ -9,7 +9,7 @@ github_runner_exporter_release_url: >-
   https://github.com/rezizter/github-runner-prometheus-exporter/releases/download/{{ github_runner_exporter_version }}/github-runner-prometheus-exporter_{{ github_runner_exporter_version | regex_replace('^v', '') }}_linux_{{ github_runner_exporter_arch }}.tar.gz
 
 # Go version to install when building from source
-github_runner_exporter_go_version: "1.23.4"
+github_runner_exporter_go_version: "1.26.0"
 
 # System user & paths
 github_runner_exporter_user: "github-exporter"
@@ -26,7 +26,7 @@ github_runner_exporter_service_state: "started"
 # CLI flags and environment variables passed to the exporter
 github_runner_exporter_cli_args: ""
 github_runner_exporter_env_vars:
-  PORT: "9101"
+  PORT: "9877"
   # GITHUB_TOKEN: ""
   # GITHUB_ORG: ""
   # GITHUB_REPO: ""
