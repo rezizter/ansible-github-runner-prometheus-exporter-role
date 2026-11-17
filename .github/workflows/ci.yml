@@ -56,7 +56,12 @@ jobs:
           python-version: "3.12"
 
       - name: Install Molecule and Docker driver
-        run: pip install "ansible-core>=2.16,<2.17" molecule molecule-plugins[docker] docker
+        run: |
+          pip install "ansible-core>=2.16,<2.17" \
+            "molecule>=24.2.0" \
+            "molecule-plugins[docker]>=23.5.0" \
+            "docker>=6.1.3,<7.0.0" \
+            "requests<2.32.0"
 
       - name: Install Ansible collections
         run: ansible-galaxy collection install community.docker
